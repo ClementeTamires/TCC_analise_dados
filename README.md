@@ -1,0 +1,1 @@
+Este repositório é uma coleção de scripts gerados para o estudo da monografia "Exploração de dados públcios para investigação in silico de genes relacionados a eosinófilos no câncer de mama." de Tamires Avila de Souza Clemente, defendido em 08 de Dezembro de 2025, pelo Insituto de Microbiologia Paulo de Góes, na Universidade Federal do Rio de Janeiro (UFRJ), campus Fundão.
