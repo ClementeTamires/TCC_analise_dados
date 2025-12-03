@@ -1,17 +1,39 @@
-Este repositório é uma coleção de scripts gerados para o estudo da monografia "Exploração de dados públcios para investigação in silico de genes relacionados a eosinófilos no câncer de mama." de Tamires Avila de Souza Clemente, defendido em 08 de Dezembro de 2025, pelo Insituto de Microbiologia Paulo de Góes, na Universidade Federal do Rio de Janeiro (UFRJ), campus Fundão. A descrição dos scripts usados se encontra a seguir, mas não foram criados/usados necesserariamente na respectiva ordem:
+Este repositório é uma coleção de scripts gerados para o estudo de monografia "Exploração de dados públcios para investigação in silico de genes relacionados a eosinófilos no câncer de mama." de Tamires Avila de Souza Clemente, defendido em 08 de Dezembro de 2025, pelo Instituto de Microbiologia Paulo de Góes, na Universidade Federal do Rio de Janeiro (UFRJ), campus Fundão. A descrição dos scripts usados se encontra a seguir, utilizados para gerar as figuras de resultados na seguinte ordem:
 
-s1_mamanalysis:
+s1_mamanalysis.py
 Usa as bibliotecas pandas, tkinter e os para importar e juntar os dados dos arquivos de dados de “gene expression RNAseq - IlluminalHiseq”, “phenotype - curated survival data” e “phenotype - Phenotypes” em um único arquivo .csv. 
 O gene expression RNA - IlluminaHiseq contém dados de expressão gênica de câncer de mama invasivo, sendo obtidos de amostras de tumor sólido primário (código 01), tumor metastático (código 06) e tecido sólido normal (código 011) adjacentes ao tumor. Por sua vez, o dataset “phenotype - Curated Survival Data” incluí uma tabela curada para análise estatística de dados de sobrevivência, enquanto que “phenotypes - Phenotypes” contém informações sobre o estado clínico do paciente, como informações demográficas, de diagnóstico, patologia, sobrevida e tratamento. 
 
-sample_type_plotandexcel
+sample_type_plotandexcel.py
 Usa as bibliotecas pandas, tkinter, os, matplotlib.pyplot, sci.py, numpy, datetime e math para fazer um arquivo excel e plotar um gráfico que contenha a contagem absoluta e porcentagem de pacientes correlacionado aos tipos de amostra. O código foi gerado com auxílio de IA (Gemini).
 O código cria uma planilha com o nome “Resumo Estatístico” e o gráfico com a representação gráfica da distribuição tipo de amostra-paciente.
 
-s2_mamanalysis
-Usa as bibliotecas pandas, os, itertools, tkinter, scipy, lifelines e warnings para analisar e realizar o score de eosinófilos, com base na soma da expressão dos 4 genes: CLC (representa Galectina 10), EPX ( representa EPO - Peroxidase de eosinófilo, do inglês “Eosinophil peroxidase”), IL5RA (representa IL5R1, receptor de IL5) e PRG2 (representa MBP, Proteína Maior Básica, do inglês “Major Basic Protein”). As siglas são definidas de acordo com a sonda HUGO do Xena, responsável por padronizar as nomenclaturas para dados e estudos disponíveis publicamente.  
-Com base nesse score, se analisou a expressão dos genes de eosinófilos nos subtipos PAM50 de câncer de mama, de sobrevida e em combinações de expressão, partindo da expressão de 4 genes, 3 genes, e por conseguinte até nenhum gene, resultando em um arquivo excel denominado Analise_genes com print da data e hora da criação do arquivo.
-O arquivo é composto por 5 abas: Dados_PAM50, no qual correlaciona a quantificação da expressão de cada gene com cada subtipo molecular; Dados_Sobrevida, que relaciona OS_time_nature2012 (Tempo de Sobrevida Global) e OS_event_nature2012 (aborda se o paciente morreu/parou de ser acompanhado ou está vivo pela numeração 0 e 1, onde 0 significa vivo, e 1 remete à morte do indivíduo especificamente por câncer) com a expressão numérica dos genes; análise estatística, a qual apresenta a contagem absoluta e porcentagem dos grupos de status de sobrevida (vivo ou morto), subtipos PAM50 e grupos de expressão; correlação contínua, onde o nível de expressão dos genes analisados são testados em relação a sobrevida pela estatística de Cox PH P-Value, resultando em valores escalonáveis por Hazard-Ratio, e por fim a aba Log, que contém o Log de atividades, salvando como registro quaisquer alterações feitas no documento.
+mamanalysis_PAM50_sample.py
+Usa as bibliotecas matplotlib, numpy e pandas para plotar um gráfico que analisa a distribuição de amostras de acordo com os subtipos PAM50, selecionando o arquivo gerado em s1_mamanalysis.py.
 
-s3_mamanalysis_survival
-Usa as mesmas bibliotecas mencionadas anteriormente para plotar os gráficos de sobrevida global, por meio da representação Kaplan-meier, correspondentes à expressão vs não expressão do grupo de genes CLC, EPX, IL5RA e PRG2 de forma individual e a partir da expressão do grupo dos 4 genes expressos simultaneamente contra os demais (expressão de 3 genes, de 2 genes e assim consecutivamente até nenhum gene).
+s4_mamanalysis_plotgenesandeos_mama.py
+Utiliza as bibliotecas pandas e matplotlib.pyplot para consruir gráficos de heatmap, colunas empilhadas com combinações de genes e colunas empilhadas com a expressão gênica simultânea do grupo de genes escolhido. Nesse caso, o grupo de genes selecionados foi CLC, EPX, IL5RA, PRG2.
+
+survival_presence_CL.py
+Utiliza as biliotecas pandas, lifelines e matplotlib para construção do gráfico de análise de sobrevida por Kaplan-Meier, comparando a alta expressão contra baixa expressão. Os grupos de alta e baixa expressão são definidos a partir da soma dos dados de genes selecionadospor paciente, que gera a expressão média agregada. Em seguida se faz um cálculo da mediana dessa expressão média agregada, e por fim se classifica as amostras em alta expressão para aquelas que forem maior que a mediana e baixa expressão para aquelas qu forem menor ou igual a mediana. Nesse script se analisou os genes CLC, EPX, IL5RA, PRG2, em que dois gráficos são gerados: um com CLC e outro sem CLC.
+
+s3_mamanalysis.py
+Utiliza as bibliotecas pandas, matplotlb, scipy, lifelines e seaborn para construir dois tipos de gráficos: o primeiro tipo se refere aos gráficos de sobrevida Kaplan-Meier comparando os grupos de expressão simultanea dos genes contra o grupo "demais", que é a combinação dos genes (3 genes, 2 genes, 1 gene, nenhum gene), e o segundo tipo se refere aos gráficos de frequência de expressão gênica por subtipo molecular de câncer de mama, em um gráfico de barras empilhado, seguido de gráficos da expressão indiidual de cada gene do grupo. Nesse script foram usados os genes CLC, EPX, IL5RA, PRG2.
+
+mamanalysis_plotgeneseos_recuit.py
+Segue a mesma lógica do script s4_mamanalysis_plotgenesandeos_mama.py, porém voltado para análise dos genes de recrutamento de eosinófilos: CCL11, CCL24, CCL26.
+
+survival_recruit_CCL24.py
+Segue a mesma logica do script survival_presence_CL.py, porém analisando os genes de recrutamento CCL11, CCL24, CCL26, em que um dos gráficos foi gerado sem CCL24.
+
+s3_mamanalysis_survivalrecruit.py
+Segue a mesma lógica do script s3_mamanalysis.py, porém analisando os genes de recrutamento CCL11, CCL24, CCL26.
+
+mamanalysis_plotgeneseos_manutenção.py
+Segue a mesma lógica do script s4_mamanalysis_plotgenesandeos_mama.py, porém analisa os genes de manutenção de sobrevida dos eosinófilos: IL5, IL33, IL25, TSLP.
+
+survival_manut_IL5.py
+Segue a mesma lógica do script survival_presence_CL.py, porém analisa os genes referentes à manutenção dos eosinófilos: IL5, IL33, IL25, TSLP, em que um dos gráficos é gerado sem IL5.
+
+s3_mamanalysis_manutenção
+Segue a mesma lógica do script s3_mamanalysis.py, porém analisando os genes de manutenção dos eosinófilos: IL5, IL33, IL25, TSLP.
